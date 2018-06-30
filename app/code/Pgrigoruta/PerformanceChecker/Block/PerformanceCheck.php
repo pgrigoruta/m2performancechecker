@@ -99,7 +99,7 @@ class PerformanceCheck extends Template {
             $recommendedValue = $this->convertToBytes($recommendedValue);
         }
 
-        if($yourValue == $recommendedValue) {
+        if($yourValue > $recommendedValue) {
             return true;
         }
         else {
@@ -198,7 +198,7 @@ class PerformanceCheck extends Template {
             case 'innodb_log_file_size':
                 $bufferSize = $this->getRecommendedMysqlSettingValue('innodb_buffer_pool_size');
                 if(is_numeric($bufferSize)) {
-                    return 0.1*$bufferSize;
+                    return (int) (0.1*$bufferSize);
                 }
                 else {
                     return $bufferSize;
@@ -206,7 +206,7 @@ class PerformanceCheck extends Template {
             case 'innodb_log_buffer_size':
                 $logFileSize = $this->getRecommendedMysqlSettingValue('innodb_log_file_size');
                 if(is_numeric($logFileSize)) {
-                    return 0.16*$logFileSize;
+                    return (int) (0.16*$logFileSize);
                 }
                 else {
                     return $logFileSize;

@@ -1,0 +1,22 @@
+{
+    "name": "pgrigoruta/module-performancechecker",
+    "description": "Check the optimum server setup for a Magento 2 web server. Based on the Nexcess whitepaper at https://smhttp-nex.nexcesscdn.net/803313/static/vten/white-paper/Nexcess-Magento2-Whitepaper-online_v2.pdf",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "email": "paul.grigoruta@gmail.com",
+            "name": "Paul Grigoruta"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Pgrigoruta\\PerformanceChecker\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

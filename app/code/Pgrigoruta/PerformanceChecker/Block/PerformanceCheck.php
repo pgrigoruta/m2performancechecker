@@ -99,7 +99,7 @@ class PerformanceCheck extends Template {
             $recommendedValue = $this->convertToBytes($recommendedValue);
         }
 
-        if($yourValue > $recommendedValue) {
+        if($yourValue >= $recommendedValue) {
             return true;
         }
         else {

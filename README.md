@@ -5,7 +5,7 @@ This module automatically checks for a few settings recommended in the https://s
 # Installation
 
 1. Download the files and copy them in your existing Magento installation
-2. php bin/magento Pgrigoruta_PerformanceChecker module:enable
+2. php bin/magento module:enable Pgrigoruta_PerformanceChecker 
 3. php bin/magento setup:upgrade
 
 # Usage

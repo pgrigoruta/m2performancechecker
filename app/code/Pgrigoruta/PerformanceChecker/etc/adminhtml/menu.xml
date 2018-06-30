@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Pgrigoruta_PerformanceChecker::checkperformance"
+             title="Performance checker"
+             module="Pgrigoruta_PerformanceChecker"
+             sortOrder="100"
+             parent="Magento_Backend::system_tools"
+             resource="Pgrigoruta_PerformanceChecker::checkperformance"
+             action="m2performancecheck/index"
+        />
+    </menu>
+</config>

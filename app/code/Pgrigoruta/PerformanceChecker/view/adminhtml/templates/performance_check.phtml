@@ -1,1 +1,123 @@
-Hello from performance checker!
+<?php /** @var \Pgrigoruta\PerformanceChecker\Block\PerformanceCheck $block */ ?>
+
+<p>The advice below is based on the Nexcess paper,
+    <a href="https://smhttp-nex.nexcesscdn.net/803313/static/vten/white-paper/Nexcess-Magento2-Whitepaper-online_v2.pdf" target="_blank">The definitive guide to optimizing Magento 2</a>
+</p>
+<p><strong style="color:red">This tool is a quick way to check some of the system settings and is not a replacement for a well-thought optimization plan.</strong> </p>
+
+<div class="admin__page-section-title">
+    <span class="title">PHP settings</span>
+</div>
+<div class="admin__table-wrapper">
+    <table class="data-table admin__table-primary">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span>Setting</span></th>
+            <th class="col-product"><span>Your value</span></th>
+            <th class="col-price-product"><span>Recommended value</span></th>
+            <th class="col-product last"><span>Result</span></th>
+        </tr>
+        </thead>
+        <tbody class="even">
+        <?php foreach($block->getCheckedPhpSettings() as $checkedPhpSetting):?>
+        <tr>
+            <td class="col-product"><?php echo $checkedPhpSetting;?></td>
+            <td class="col-product"><?php echo $block->getPHPSettingValue($checkedPhpSetting)?></td>
+            <td class="col-product"><?php echo $block->getRecommendedPHPSettingValue($checkedPhpSetting)?></td>
+            <td class="col-product last">
+                <?php if($block->phpSettingIsGood($checkedPhpSetting,  $block->getPHPSettingValue($checkedPhpSetting), $block->getRecommendedPHPSettingValue($checkedPhpSetting))):?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php else:?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php endif;?>
+
+
+            </td>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</div>
+
+<div class="admin__page-section-title">
+    <span class="title">MySQL</span>
+    <table class="data-table admin__table-primary">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span>Setting</span></th>
+            <th class="col-product"><span>Your value</span></th>
+            <th class="col-price-product"><span>Recommended value</span></th>
+            <th class="col-product">Notes</th>
+            <th class="col-product last"><span>Result</span></th>
+        </tr>
+        </thead>
+        <?php foreach($block->getCheckedMysqlSettings() as $checkedMysqlSetting):?>
+        <tr>
+            <td class="col-product"><?php echo $checkedMysqlSetting;?></td>
+            <td class="col-product"><?php echo $block->getMysqlSettingValue($checkedMysqlSetting)?></td>
+            <td class="col-product"><?php echo $block->getRecommendedMysqlSettingValue($checkedMysqlSetting)?></td>
+            <td class="col-product"><?php echo $block->getMysqlSettingNotes($checkedMysqlSetting)?></td>
+            <td class="col-product last">
+                <?php if($block->mysqlSettingIsGood($checkedPhpSetting,  $block->getMysqlSettingValue($checkedMysqlSetting), $block->getRecommendedMysqlSettingValue($checkedMysqlSetting))):?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php else:?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php endif;?>
+            </td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+</div>
+
+<div class="admin__page-section-title">
+    <span class="title">Magento</span>
+
+    <table class="data-table admin__table-primary">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span>Check</span></th>
+            <th class="col-product last"><span>Result</span></th>
+        </tr>
+        <tr>
+            <td class="col-product"><span>Is cache configured to be stored in anything else than files (memcache, redis)?</span></td>
+            <td class="col-product last">
+                <?php if($block->isCacheInFiles()):?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php else:?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php endif;?>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-product"><span>Is session configured to be stored in anything else than files (memcache, redis)?</span></td>
+            <td class="col-product last">
+                <?php if($block->isSessionInFiles()):?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php else:?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php endif;?>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-product"><span>Are all cache types enabled?</span></td>
+            <td class="col-product last">
+                <?php if($block->isAnyCacheDisabled()):?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php else:?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php endif;?>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-product"><span>Is full page cache configured to user Varnish?</span></td>
+            <td class="col-product last">
+                <?php if($block->isFpcInVarnish()):?>
+                    <span class="grid-severity-critical"><span>FAIL</span></span>
+                <?php else:?>
+                    <span class="grid-severity-notice"><span>PASS</span></span>
+                <?php endif;?>
+            </td>
+        </tr>
+        </thead>
+    </table>
+</div>
